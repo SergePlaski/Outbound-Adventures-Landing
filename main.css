@@ -1,0 +1,254 @@
+:root {
+	--header-height: 3.5rem;
+
+	--section1-bg: url('./img/pexels-krivec-ales-554609.jpg');
+	--section2-bg: url('./img/pexels-do-castle-2270328.jpg');
+	--section3-bg: url('./img/pexels-andrew-degarde-10490351.jpg');
+	--section4-bg: url('./img/pexels-linken-van-zyl-16023293.jpg');
+
+	--animation-section-header-duration: 1s;
+	--animation-section-text-duration: 750ms;
+	--animation-section-text-delay: 1s;
+}
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+}
+/* for scroll-snap: the element we are scrolling in */
+/* some browsers support html, others - body */
+/* y = scrolling vertically */
+/* scroll-snap-type: y mandatory;  */
+html, body {
+    scroll-snap-type: y proximity; /* when approaching the boundary */
+}
+body {
+	min-height: 100vh;
+	min-height: 100dvh;
+	font-family: 'Quicksand', sans-serif;
+}
+
+.app-header, 
+.app-footer {
+	/* position: sticky; */
+	position: fixed;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  padding-inline: 1rem;
+  z-index: 1;
+  color: white;
+	background-color: #333;
+  opacity: .9;
+}
+.app-header {
+	top: 0;
+	height: var(--header-height);
+  justify-content: space-between;
+}
+.app-header .branding {
+	display: flex;
+	align-items: center;
+}
+.app-header .branding .logo {
+	height: 2.5rem;
+	margin-right: .4em;
+}
+.app-footer {
+	bottom: 0;
+	padding-block: .5rem;
+	justify-content: center;
+}
+.app-footer .copy {
+	font-size: .8rem;
+}
+.app-footer .copy > * {
+	margin-left: 1em;
+}
+.app-header .nav-menu {
+  display: flex;
+  gap: 1.25em;
+	margin-inline: 1rem;
+	font-size: .95rem;
+	list-style: none;
+}
+.app-header .nav-menu > li {
+	position: relative;
+	padding-inline: .08em; /* minimize layout shift on hover */
+}
+.app-header .nav-menu > li:hover {
+	font-weight: bold;
+	transform: scale(1.05);
+	cursor: pointer;
+	padding-inline: 0;
+}
+
+section {
+	position: relative;
+	height: 100vh;
+	height: 100dvh; /* for mobile */
+  overflow: hidden; /* causes problems with sticky element, however clip is not supported by Safari */
+	/* for scroll-snap: */
+	scroll-snap-align: start;
+	scroll-margin-top: 3.5rem; /* header height */
+}
+/* feature query for browsers that support overflow: clip; */
+@supports (overflow: clip) {
+  .section {
+    overflow: clip; /* nont supported by Safari */
+  }
+}
+
+section:nth-of-type(1) {
+	background: center / cover no-repeat
+	var(--section1-bg);
+}
+section:nth-of-type(2) {
+	background: center / cover no-repeat
+	var(--section2-bg);
+}
+section:nth-of-type(3) {
+	background: center / cover no-repeat
+	var(--section3-bg);
+}
+section:nth-of-type(4) {
+	background: center / cover no-repeat
+	var(--section4-bg);
+}
+
+section .section-content-wrapper {
+	position: absolute;
+	width: min(700px, 80vw);
+	display: grid;
+	color: white;
+}
+[data-position='top-left'] .section-content-wrapper {
+	top: var(--header-height);
+	left: var(--header-height);
+}
+[data-position='top-right'] .section-content-wrapper {
+	top: var(--header-height);
+	right: var(--header-height);
+}
+section:first-of-type .section-content-wrapper {
+	top: calc(var(--header-height) * 2); /* compensate for the header height, which always cover the top of the first section */
+}
+
+section .section-header {
+	height: max-content;
+	border: 4px solid white;
+	padding: 1.5em;
+	margin-bottom: 1em;
+	line-height: 1.5;
+	text-align: center;
+	text-shadow: 1px 1px #888;
+	box-shadow: 0 0 1px #888 inset;
+	font-family: 'Alexandria', sans-serif;
+}
+section .section-title {
+	font-size: 2.75rem;
+	font-weight: 700;
+
+}
+section .section-subtitle {
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+section p {
+	height: max-content;
+	width: 80%;
+	margin-inline: auto;
+	padding: 1em;
+	line-height: 1.4;
+	font-size: 1.1rem;
+	text-shadow: 1px 1px #444;
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 500;
+}
+section .section-text {
+	border-radius: .75em;
+	background-color: hsla(201, 8%, 48%, 0.3);
+}
+
+/* social links and 'to the top' button */
+.fixed-links {
+	position: fixed;
+	bottom: 3.5rem;
+	right: 0;
+	height: max(160px, 60vh);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	z-index: 3;
+}
+.social-links {
+	list-style: none;
+}
+.nav-button {
+	display: block;
+	width: 39px;
+	height: 39px;
+	margin: 0 .35em .5em .35em;
+	border: 1px solid #ddd;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.nav-button:hover {
+	transform: scale(1.1);
+}
+.social-links .link-fb {
+	background: url('./assets/social_sprites_icons.svg') no-repeat;
+}
+.social-links .link-inst {
+	background: url('./assets/social_sprites_icons.svg') no-repeat;
+	background-position: center -38px;
+}
+.social-links .link-yt {
+	background: url('./assets/social_sprites_icons.svg') no-repeat;
+	background-position: center calc(-4 *38px);
+}
+.nav-button.link-top {
+	background-color: rgba(0, 0, 0, .7);
+	background: url('./assets/back-to-top-icon-png-18w-nb.png') no-repeat rgba(0, 0, 0, .35);
+	background-size: contain;
+}
+
+/* animate app header on load */
+.app-header {
+		animation: 750ms ease-in-out appHeaderSlideInDown;
+}
+/* animate first section title and text on load */
+section:first-of-type .section-header {
+	animation: section-header-load var(--animation-section-header-duration) backwards;
+	animation-delay: var(--animation-section-header-delay);
+}
+section:first-of-type .section-text {
+	animation: section-text-load var(--animation-section-text-duration) backwards;
+	animation-delay: var(--animation-section-text-delay);
+}
+
+@keyframes appHeaderSlideInDown {
+	from {
+		transform: translateY(calc(-1.1 * var(--header-height)));
+	}
+}
+@keyframes section-header-load {
+	from {
+		transform: translateX(-100vw);
+	}
+}
+@keyframes section-text-load {
+	from {
+		transform: translateX(-100vw);
+	}
+}
+
+/* mobile */
+@media screen and (width <= 480) {
+	[data-position='top-left'] {
+		background-position: -30%;
+	}	
+}
